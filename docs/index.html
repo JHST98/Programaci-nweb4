@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación del Proyecto - MiInventarioExpress</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; }
+        h1, h2, h3 { color: #2c3e50; }
+        .header { text-align: center; padding: 40px 0; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .section { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .architecture-diagram { display: flex; flex-wrap: wrap; justify-content: space-between; margin: 30px 0; padding: 20px; background: #f0f4f8; border-radius: 8px; gap: 20px;}
+        .node { flex: 1; min-width: 250px; text-align: center; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .node h3 { margin-top: 0; color: #3498db; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f4f6f7; }
+        code { background-color: #eee; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #e74c3c; }
+        .links { display: flex; flex-wrap: wrap; gap: 15px; }
+        .links a { display: inline-block; padding: 10px 20px; background-color: #3498db; color: #fff; text-decoration: none; border-radius: 4px; transition: background 0.3s; font-weight: bold; }
+        .links a:hover { background-color: #2980b9; }
+        .method { font-weight: bold; padding: 4px 8px; border-radius: 4px; color: white; font-size: 0.9em; }
+        .get { background-color: #2ecc71; }
+        .post { background-color: #3498db; }
+        .put { background-color: #f39c12; }
+        .delete { background-color: #e74c3c; }
+        @media (max-width: 768px) {
+            .architecture-diagram { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Documentación Oficial</h1>
+        <p>MiInventarioExpress - Programación Web</p>
+    </div>
+
+    <div class="section">
+        <h2>1. Enlaces del Proyecto</h2>
+        <div class="links">
+            <a href="https://prismatic-axolotl-7b5410.netlify.app" target="_blank">🌐 Ver Frontend en Netlify</a>
+            <a href="https://programaci-nweb4-production.up.railway.app" target="_blank">⚙️ Ver API en Railway</a>
+            <a href="https://github.com/JHST98/Programaci-nweb4" target="_blank">📦 Repositorio GitHub</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Arquitectura de Despliegue</h2>
+        <p>El proyecto ha sido desplegado utilizando una arquitectura de microservicios moderna, separando el frontend, el backend y la base de datos en diferentes proveedores en la nube para garantizar escalabilidad y mantenimiento independiente.</p>
+        
+        <div class="architecture-diagram">
+            <div class="node">
+                <h3>🖥️ Frontend</h3>
+                <p><strong>Netlify</strong></p>
+                <p>Aplicación Vue 3 (Vite). Consume la API mediante peticiones HTTP. Despliegue continuo desde GitHub usando `netlify.toml`.</p>
+            </div>
+            <div class="node">
+                <h3>⚙️ Backend API</h3>
+                <p><strong>Railway</strong></p>
+                <p>Servidor Node.js con Express. Maneja la lógica de negocio, autenticación, WebSockets (Socket.io) y variables de entorno seguras.</p>
+            </div>
+            <div class="node">
+                <h3>🗄️ Base de Datos</h3>
+                <p><strong>MongoDB Atlas</strong></p>
+                <p>Clúster NoSQL en la nube. Almacena de forma segura usuarios, productos, categorías y el historial de mensajes del chat.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. Documentación de Endpoints (API REST)</h2>
+        <p>A continuación se detallan los principales endpoints disponibles en la API del backend, protegidos por políticas de CORS estrictas.</p>
+
+        <h3>📦 Gestión de Productos</h3>
+        <table>
+            <tr>
+                <th>Método</th>
+                <th>Ruta</th>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td><span class="method get">GET</span></td>
+                <td><code>/api/products</code></td>
+                <td>Obtiene la lista de todos los productos disponibles.</td>
+            </tr>
+            <tr>
+                <td><span class="method get">GET</span></td>
+                <td><code>/api/products/:id</code></td>
+                <td>Obtiene los detalles específicos de un producto por su ID.</td>
+            </tr>
+            <tr>
+                <td><span class="method post">POST</span></td>
+                <td><code>/api/products</code></td>
+                <td>Crea un nuevo producto (Soporta subida de imágenes con Multer).</td>
+            </tr>
+            <tr>
+                <td><span class="method put">PUT</span></td>
+                <td><code>/api/products/:id</code></td>
+                <td>Actualiza toda la información de un producto existente.</td>
+            </tr>
+            <tr>
+                <td><span class="method delete">DELETE</span></td>
+                <td><code>/api/products/:id</code></td>
+                <td>Elimina un producto del inventario de forma permanente.</td>
+            </tr>
+        </table>
+
+        <h3 style="margin-top: 30px;">📂 Categorías</h3>
+        <table>
+            <tr>
+                <th>Método</th>
+                <th>Ruta</th>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td><span class="method get">GET</span></td>
+                <td><code>/api/categories</code></td>
+                <td>Obtiene todas las categorías disponibles para filtrar productos en el catálogo.</td>
+            </tr>
+        </table>
+
+        <h3 style="margin-top: 30px;">🔐 Autenticación</h3>
+        <table>
+            <tr>
+                <th>Método</th>
+                <th>Ruta</th>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td><span class="method post">POST</span></td>
+                <td><code>/login</code></td>
+                <td>Valida las credenciales e inicia la sesión segura del usuario.</td>
+            </tr>
+            <tr>
+                <td><span class="method post">POST</span></td>
+                <td><code>/register</code></td>
+                <td>Registra un nuevo usuario en la base de datos MongoDB.</td>
+            </tr>
+            <tr>
+                <td><span class="method get">GET</span></td>
+                <td><code>/logout</code></td>
+                <td>Destruye la cookie y cierra la sesión activa del usuario.</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
