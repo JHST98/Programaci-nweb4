@@ -30,7 +30,8 @@ onMounted(async () => {
 
   if (isEditMode.value) {
     try {
-      const response = await fetch(`/api/products/${route.params.id}`);
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${baseUrl}/api/products/${route.params.id}`);
       if (response.ok) {
         const product = await response.json();
         formData.value = {
@@ -94,10 +95,12 @@ const handleSubmit = async () => {
   submitError.value = null;
 
   const url = isEditMode.value ? `/api/products/${route.params.id}` : '/api/products';
+  const baseUrl = import.meta.env.VITE_API_URL || '';
+  const fullUrl = `${baseUrl}${url}`;
   const method = isEditMode.value ? 'PUT' : 'POST';
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(fullUrl, {
       method,
       headers: {
         'Content-Type': 'application/json'

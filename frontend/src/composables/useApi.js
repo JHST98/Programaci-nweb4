@@ -22,7 +22,9 @@ export function useApi(url, options = {}) {
     };
 
     try {
-      const response = await fetch(url, fetchOptions);
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const fullUrl = url.startsWith('/') ? `${baseUrl}${url}` : url;
+      const response = await fetch(fullUrl, fetchOptions);
 
       if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);
